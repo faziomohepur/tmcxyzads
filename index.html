@@ -454,7 +454,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <div class="booking">
             <p class="booking-kicker">Đặt lịch nhanh</p>
             <h2>Cho chúng tôi biết hành trình của bạn.</h2>
-            <p class="booking-intro">Điền thông tin, hệ thống mở Zalo với nội dung sẵn để bạn xác nhận.</p>
+            <p class="booking-intro">Điền thông tin, hệ thống mở email với nội dung chuyến đi đã chuẩn bị sẵn.</p>
             <form id="form">
               <div class="form-grid">
                 <div class="field"><label for="name">Họ và tên</label><input id="name" name="name" type="text" placeholder="Nguyễn Văn An" autocomplete="name"></div>
@@ -465,7 +465,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <div class="field full"><label for="dropoff">Điểm đến</label><input id="dropoff" name="dropoff" type="text" placeholder="Ví dụ: Sân bay Rạch Giá"></div>
                 <div class="field full"><label for="note">Ghi chú</label><textarea id="note" name="note" placeholder="Số người, hành lý, ghế trẻ em..."></textarea></div>
               </div>
-              <button class="btn btn-primary submit-btn" type="submit"><i class="fa-solid fa-paper-plane"></i> ĐẶT XE NGAY QUA ZALO</button>
+              <button class="btn btn-primary submit-btn" type="submit"><i class="fa-solid fa-envelope"></i> GỬI YÊU CẦU QUA EMAIL</button>
             </form>
             <div class="urgent"><strong>Cần xe gấp? Xin gọi ngay</strong><div class="urgent-actions"><a class="btn btn-forest" href="tel:0775856456"><i class="fa-solid fa-phone"></i> Gọi đặt xe</a><a class="btn zalo-btn" href="https://zalo.me/0328181085" target="_blank" rel="noopener"><span>Zalo</span> Nhắn ngay</a></div></div>
           </div>
@@ -552,7 +552,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <a class="topbtn" id="topbtn" href="#home" aria-label="Cuộn lên đầu trang"><i class="fa-solid fa-arrow-up"></i></a>
 
   <div class="thanks-modal" id="thanks" role="dialog" aria-modal="true" aria-labelledby="thanks-title">
-    <div class="thanks-card"><div class="thanks-icon"><i class="fa-solid fa-check"></i></div><h2 id="thanks-title">Cảm ơn bạn!</h2><p>Thông tin chuyến đi đã được chuẩn bị. Vui lòng gửi tin nhắn trong cửa sổ Zalo vừa mở để hoàn tất đặt xe.</p><button class="btn btn-forest" id="close-thanks" type="button">Đã hiểu</button></div>
+    <div class="thanks-card"><div class="thanks-icon"><i class="fa-solid fa-check"></i></div><h2 id="thanks-title">Đã chuẩn bị email!</h2><p id="thanks-message">Ứng dụng email đã được mở với nội dung đặt xe. Bạn kiểm tra lại rồi bấm Gửi để chúng tôi nhận yêu cầu.</p><textarea id="booking-message" readonly aria-label="Nội dung đặt xe"></textarea><button class="btn btn-primary" id="copy-message" type="button"><i class="fa-solid fa-copy"></i> Sao chép nội dung</button><button class="btn btn-forest" id="close-thanks" type="button">Đã hiểu</button></div>
   </div>
 
   <script>
@@ -587,6 +587,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     const bookingForm = document.getElementById('form');
     const thanksModal = document.getElementById('thanks');
+    const bookingMessage = document.getElementById('booking-message');
+    const copyMessageButton = document.getElementById('copy-message');
+    let latestBookingMessage = '';
+    async function copyBookingMessage() {
+      try {
+        await navigator.clipboard.writeText(latestBookingMessage);
+        copyMessageButton.innerHTML = '<i class="fa-solid fa-check"></i> Đã sao chép';
+      } catch {
+        bookingMessage.focus();
+        bookingMessage.select();
+        document.execCommand('copy');
+        copyMessageButton.innerHTML = '<i class="fa-solid fa-check"></i> Đã sao chép';
+      }
+    }
     bookingForm.addEventListener('submit', event => {
       event.preventDefault();
       if (!bookingForm.reportValidity()) return;
@@ -601,10 +615,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         `Điểm đến: ${data.get('dropoff') || 'Trao đổi sau'}`,
         `Ghi chú: ${data.get('note') || 'Không có'}`
       ].join('\n');
-      const zaloUrl = `https://zalo.me/0328181085?text=${encodeURIComponent(message)}`;
-      window.open(zaloUrl, '_blank', 'noopener');
+      latestBookingMessage = message;
+      bookingMessage.value = message;
+      copyMessageButton.innerHTML = '<i class="fa-solid fa-copy"></i> Sao chép lại';
+      copyBookingMessage();
+      const subject = 'Yêu cầu đặt xe mới - Taxi\'sGrab Rạch Giá';
+      const mailtoUrl = `mailto:thienduongkg3536@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+      window.location.href = mailtoUrl;
       thanksModal.classList.add('show');
     });
+    copyMessageButton.addEventListener('click', copyBookingMessage);
     document.getElementById('close-thanks').addEventListener('click', () => thanksModal.classList.remove('show'));
     thanksModal.addEventListener('click', event => { if (event.target === thanksModal) thanksModal.classList.remove('show'); });
 
@@ -621,8 +641,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       image.addEventListener('error', () => { image.style.display = 'none'; }, { once: true });
     });
   </script>
+<<<<<<< Updated upstream
   <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PMM57XFB"
+=======
+ <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5DFZJSW6"
+>>>>>>> Stashed changes
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 </body>
