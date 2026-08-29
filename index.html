@@ -127,8 +127,46 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       backdrop-filter: blur(14px) saturate(120%);
     }
     .header-inner { width: min(1360px, calc(100% - 30px)); min-height: 78px; margin: auto; display: flex; align-items: center; gap: 20px; }
-    .logo { flex: 0 0 205px; }
-    .logo img { width: 205px; height: 57px; object-fit: contain; }
+    .logo { flex: 0 0 205px; text-decoration: none; }
+    .brand-wordmark {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      line-height: 1;
+      color: var(--forest-950);
+      filter: drop-shadow(0 2px 0 rgba(11,46,38,.08));
+    }
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 82px;
+      height: 46px;
+      padding: 0 10px;
+      color: var(--forest-950);
+      background: rgba(200, 71, 31, .08);
+      border: 1px solid rgba(200, 71, 31, .18);
+      border-radius: 10px;
+      font-family: "Lora", serif;
+      font-size: clamp(1.98rem, 2.4vw, 2.64rem);
+      font-weight: 800;
+      letter-spacing: .04em;
+      transform: scale(1.2);
+      transform-origin: left center;
+    }
+    .brand-mark i {
+      color: var(--terra);
+      font-size: clamp(1.2rem, 1.44vw, 1.56rem);
+      margin-left: 6px;
+    }
+    .brand-wordmark small {
+      display: block;
+      color: var(--terra);
+      font-size: .56rem;
+      font-weight: 800;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
     .nav { display: flex; align-items: center; justify-content: center; gap: clamp(10px, 1.25vw, 22px); flex: 1; }
     .nav a { position: relative; color: var(--forest-950); font-size: .79rem; font-weight: 700; text-decoration: none; white-space: nowrap; }
     .nav a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -8px; height: 2px; background: var(--terra); transition: right .2s ease; }
@@ -277,7 +315,37 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     .footer { padding: 80px 0 30px; color: var(--paper-light); background: #08251f; }
     .footer-grid { display: grid; grid-template-columns: 1.35fr .9fr .9fr 1fr; gap: 46px; }
-    .footer-logo { width: 210px; filter: brightness(1.05); }
+    .footer-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      color: var(--paper-light);
+      font-family: "Lora", serif;
+      text-decoration: none;
+      filter: drop-shadow(0 2px 0 rgba(255,255,255,.06));
+    }
+    .footer-brand .brand-mark {
+      min-width: 88px;
+      height: 50px;
+      color: var(--paper-light);
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.12);
+      transform: scale(1.2);
+      transform-origin: left center;
+    }
+    .footer-brand .brand-mark i {
+      color: #ee835e;
+    }
+    .footer-brand small {
+      display: block;
+      color: #ee835e;
+      font-size: .6rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      font-family: "Be Vietnam Pro", sans-serif;
+      font-weight: 800;
+    }
     .footer h3 { margin: 0 0 18px; color: #ee835e; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; }
     .footer p { color: #bfb7a8; font-size: .88rem; }
     .footer a { display: flex; align-items: center; gap: 10px; margin: 10px 0; color: #e8dfcd; text-decoration: none; font-size: .86rem; }
@@ -410,7 +478,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <body>
   <header class="header">
     <div class="header-inner">
-      <a class="logo" href="#home" aria-label="Dịch Vụ Trường Phong - Trang Chủ"><img src="assets/logo.svg" alt="HỘ KINH DOANH DỊCH VỤ TRƯỜNG PHONG"></a>
+      <a class="logo" href="#home" aria-label="Dịch Vụ Trường Phong - Trang Chủ">
+        <span class="brand-wordmark"><span class="brand-mark">TP<i class="fa-solid fa-car-side"></i></span></span>
+      </a>
       <nav class="nav" id="nav" aria-label="Điều hướng chính">
         <a href="#home">Trang Chủ</a><a href="#gioi-thieu">Giới Thiệu</a><a href="#dich-vu">Dịch Vụ</a><a href="#bang-gia">Bảng giá</a><a href="#xe">Xe của chúng tôi</a><a href="#bao-mat">Chính sách bảo mật</a><a href="#thanh-toan">Chính sách thanh toán</a><a href="#lien-he">Liên hệ</a>
       </nav>
@@ -534,7 +604,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <footer id="lien-he" class="footer">
     <div class="container">
       <div class="footer-grid">
-        <div><img class="footer-logo" src="assets/logo.svg" alt="Trường Phong Rạch Giá"><p>Xe mới, tài xế thân thiện, giá minh bạch. Phục vụ 24/7 với dịch vụ cho thuê xe ô tô 4 chỗ và 7 chỗ tại Rạch Giá, Kiên Giang và các tuyến liên tỉnh.</p></div>
+        <div><a class="footer-brand" href="#home" aria-label="Trường Phong Rạch Giá"><span class="brand-mark">TP<i class="fa-solid fa-car-side"></i></span></a><p>Xe mới, tài xế thân thiện, giá minh bạch. Phục vụ 24/7 với dịch vụ cho thuê xe ô tô 4 chỗ và 7 chỗ tại Rạch Giá, Kiên Giang và các tuyến liên tỉnh.</p></div>
         <div><h3>Chứng Nhận Đủ Điều Kiện</h3><p><i class="fa-solid fa-location-dot"></i> GIẤY CHỨNG NHẬN ĐĂNG KÝ HỘ KINH DOANH</p><p>Mã số hộ kinh doanh: 8671000161-001.</p><p>Mã số đăng ký hộ kinh doanh: 56A8030244</p></div>
         <div><h3>Liên hệ ngay</h3><a class="footer-phone" href="tel:0775856456"><i class="fa-solid fa-phone"></i> 0775 856 456</a><p>Thanh toán: tiền mặt, chuyển khoản, ví điện tử.</p></div>
         <div><h3>Kết nối</h3><a href="https://www.facebook.com/@tmcrachgia" target="_blank" rel="noopener"><i class="fa-brands fa-facebook"></i> Facebook</a><a href="https://zalo.me/0328181085" target="_blank" rel="noopener"><span>Zalo</span></a><a href="https://www.tiktok.com/@tmcrachgia" target="_blank" rel="noopener"><i class="fa-brands fa-tiktok"></i> TikTok</a><a href="https://www.google.com/maps/search/?api=1&query=R%E1%BA%A1ch+Gi%C3%A1+Ki%C3%AAn+Giang" target="_blank" rel="noopener"><i class="fa-solid fa-map-location-dot"></i> Google Maps</a></div>
